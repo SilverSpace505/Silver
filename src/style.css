@@ -1,0 +1,174 @@
+
+
+:root {
+  --btnAlpha: 0.5;
+  --width: 0;
+  --height: 0;
+  --switch: 1s;
+}
+
+@font-face {
+  font-family: font;
+  src: url(/font.woff2);
+  font-display: block;
+}
+
+body {
+  font-family: font;
+  background-color: black;
+  color: white;
+  overflow: hidden;
+  user-select: none;
+}
+
+button {
+  font-family: font;
+}
+
+html {
+  font-size: 1px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 100rem;
+  text-shadow: 0 10rem #555, 0 0 20rem black, 0 10rem 20rem black;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+#pages {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+#pages button {
+  margin: 2.5rem 0;
+  font-size: 50rem;
+  text-shadow: 0 5rem #555, 0 0 10rem black, 0 5rem 10rem black;
+  position: relative;
+  width: 325rem;
+  height: 75rem;
+  text-align: left;
+  border: none;
+  padding-left: 30rem;
+  color: white;
+  transition: width 0.2s ease-out, padding-left 0.2s ease-out, all 0.2s ease-out;
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 99.9%;
+  transform: translateY(-50%);
+  width: 75rem;
+  height: 75rem;
+  background: inherit;
+  clip-path: polygon(0 0, 100% 0%, 0 100%);
+}
+
+#pages button:hover {
+  width: 362.5rem;
+  padding-left: 67.5rem;
+}
+
+#pages button:disabled {
+  width: 287.5rem;
+  padding-left: 20rem;
+  opacity: 0.5;
+}
+
+#pages button:disabled {
+  translate: -10rem 0;
+}
+
+.sideClick {
+  animation: sideBtnClick 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sideClick:disabled {
+  animation: sideBtnClickD 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes sideBtnClick {
+  0% {right: 0}
+  25% {right: 200rem; opacity: 0;}
+  50% {right: 100rem; opacity: 0;}
+  100% {right: 0; opacity: 1;}
+}
+
+@keyframes sideBtnClickD {
+  0% {right: 0; opacity: 0.5;}
+  25% {right: 200rem; opacity: 0;}
+  50% {right: 100rem; opacity: 0;}
+  100% {right: 0; opacity: 0.5;}
+}
+
+#silverBtn { background-color: rgba(0, 127, 255, var(--btnAlpha)); }
+#gamesBtn { background-color: rgba(255, 0, 0, var(--btnAlpha)); }
+#infoBtn { background-color: rgba(255, 127, 0, var(--btnAlpha)); }
+#devlogsBtn { background-color: rgba(255, 255, 0, var(--btnAlpha)); }
+#chatBtn { background-color: rgba(0, 255, 0, var(--btnAlpha)); }
+#extraBtn { background-color: rgba(127, 127, 127, var(--btnAlpha)); }
+
+.content {
+  display: block;
+  /* background-color: red; */
+  opacity: 1;
+  position: absolute;
+  left: 450rem;
+  top: 200rem;
+  width: calc(var(--width) - 450rem - 50em);
+  height: calc(var(--height) - 200rem - 50em);
+  transition: opacity 0.75s;
+}
+
+.in {
+  transition-timing-function: cubic-bezier(.33,0,.66,0);
+  opacity: 1;
+  z-index: 0;
+}
+
+.out {
+  transition-timing-function: cubic-bezier(.33,1,.66,1);
+  opacity: 0;
+  z-index: -1;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1000;
+}
+
+#title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 210rem;
+}
+
+#title * {
+  position: absolute;
+}
+
+#title h1 {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -100%)
+}

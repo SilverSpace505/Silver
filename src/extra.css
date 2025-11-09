@@ -1,0 +1,45 @@
+
+#extra h2 {
+  transition: translate var(--switch) ease, scale var(--switch) ease;
+}
+
+#extra h2.hide {
+  translate: -50% 0;
+  scale: 0;
+}
+
+#extra-content {
+  /* background-color: red; */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  text-align: center;
+}
+
+#extra p, #extra a {
+  font-size: 30rem;
+  font-family: font;
+  text-shadow: 0 3rem #555, 0 0 10rem black, 0 3rem 10rem black;
+  transition: translate var(--switch) ease;
+}
+
+#extra p.hide, #extra a.hide {
+  translate: 0 50rem;
+}
+
+#extra p:nth-child(2) {
+  transition-delay: calc(var(--switch) / 3 / 3);
+}
+
+#extra a {
+  color: rgb(0, 150, 255);
+  text-shadow: 0 3rem rgb(0, 40, 70), 0 0 10rem black, 0 3rem 10rem black;
+  display: block;
+  transition-delay: calc(var(--switch) * 2 / 3 / 3);
+}
+
+#extra a:visited {
+  color: rgb(150, 0, 255);
+  text-shadow: 0 3rem rgb(40, 0, 70), 0 0 10rem black, 0 3rem 10rem black;
+}

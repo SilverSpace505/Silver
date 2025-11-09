@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Silver</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="/src/silver.css">
+    <link rel="stylesheet" href="/src/games.css">
+    <link rel="stylesheet" href="/src/info.css">
+    <link rel="stylesheet" href="/src/devlogs.css">
+    <link rel="stylesheet" href="/src/chat.css">
+    <link rel="stylesheet" href="/src/extra.css">
+    <link rel="shortcut icon" href="/icon.ico" type="image/x-icon">
+    <script>
+      const scale = Math.min(window.innerWidth / 1000, window.innerHeight / 1000)
+      document.documentElement.style.fontSize = scale + 'px'
+      document.documentElement.style.setProperty('--width', window.innerWidth / scale + 'rem')
+      document.documentElement.style.setProperty('--height', window.innerHeight / scale + 'rem')
+    </script>
+  </head>
+  <body>
+    <iframe src="https://space.silverspace.io" frameborder="0"></iframe>
+
+    <div id="title">
+      <svg width="400rem" height="200rem" id="title-bg" viewBox="0 0 400 200">
+        <path d="M50,150 C475,150 350,100 100,50" stroke="rgba(0,127,255,0.75)" fill="none" stroke-width="15" stroke-linecap="round"/>
+      </svg>
+      <h1>Silver</h1>
+      <svg width="400rem" height="200rem" id="title-fg" viewBox="0 0 400 200">
+        <path d="M50,150 C250,150 300,140 325,125" stroke="rgba(0,127,255,0.5)" fill="none" stroke-width="15" stroke-linecap="round"/>
+      </svg>   
+    </div>
+    
+
+    <div id="pages">
+      <button id="silverBtn" disabled>Silver</button>
+      <button id="gamesBtn">Games</button>
+      <button id="infoBtn">Info</button>
+      <button id="devlogsBtn">Devlogs</button>
+      <button id="chatBtn">Chat</button>
+      <button id="extraBtn">Extra</button>
+    </div>
+
+    <div id="silver" class="content out">
+      <div id="images">
+        <div class="side-img" id="img1"></div>
+        <div class="side-img" id="img2"></div>
+        <div class="side-img" id="img3"></div>
+        <div class="side-img" id="img4"></div>
+        <img id="main-img" src="/image.png" alt="Icon">
+      </div>
+      <p>Welcome to my website! This is where all my games are with some information about me. It's also a place to hangout and chat.</p>
+    </div>
+
+    <div id="games" class="content out">
+      <div id="games-top">
+        <input type="text" id="search" placeholder="Search">
+        <h2>Games</h2>
+        <div class="right">
+          <select name="filter" id="filter">
+            <option value="all">All</option>
+            <option value="3d">3D</option>
+            <option value="2d">2D</option>
+            <option value="js">JS</option>
+            <option value="godot">Godot</option>
+          </select>
+          <select name="sort" id="sort">
+            <option value="cool">Cool</option>
+            <option value="new">New</option>
+            <option value="old">Old</option>
+            <option value="views">Views</option>
+          </select>
+        </div>
+      </div>
+      <div id="games-container"></div>
+    </div>
+
+    <div id="info" class="content out">
+      <h2>Info</h2>
+      <div id="about-me">
+        <h3>About Me</h3>
+        <p>I'm a developer that experiments with simulations, graphics, networking, and games.</p>
+        <p>I've coded this website to share my projects and hopefully spread some fun. I enjoy creating new things, and most of all testing my boundaries of what I can code.</p>
+        <p>I'm currently learning more and more typescript, while creating various simulations and apps. - With the occasional game.</p>
+        <h3>Backstory</h3>
+        <p>
+          In around 2020-2021 i created various scratch projects where i learned the fundamentals of coding and experimented with ideas.
+          After that, i tried various game engines and languages, i made a few projects in python, and learnt a bit of unity and unreal.
+          In 2022 I learnt Godot and made a load of little video games, some were made to learn Godot, while others were made to compete in Game Jams.
+          In 2023 I switched to JavaScript and the web to make cool web games, like the farlands and speedwing origins.
+          Later, I experimented with many ideas relating to simulations and tricky networking, at the end of 2024 the event happened (deleted my whole codebase),
+          since then i've developed daily backups of the codebase and other safety measures.
+          Recently, I've switched to typescript as a way to take the complexity of my projects further - Type safety and ESLint are actually so cool.
+        </p>
+        <h4>* I'm not sure what to think of you if you actually read all that. Reach out to me on discord (my username is <span>silverspace.io</span>) if you're interested.</h4>
+        <div style="height: 30rem"></div>
+      </div>
+      <img src="/pf4-old.png" alt="Icon" id="pf-img">
+      <div id="links">
+        <a href="https://github.com/SilverSpace505" target="_blank"><img src="/github.png" alt="Github"></a>
+        <a href="https://silverspace.itch.io/" target="_blank"><img src="/itch-io.png" alt="Itch.io"></a>
+        <a href="https://scratch.mit.edu/users/SilverSpace707/" target="_blank"><img src="/scratch.png" alt="Scratch"></a>
+      </div>
+    </div>
+    <div id="devlogs" class="content out">
+      <h2>Devlogs</h2>
+      <div id="devlogs-path"></div>
+      <div id="devlogs-container">
+        <div class="devlog">
+          <span class="devlog-title">Cool devlog</span>
+          <span class="devlog-date">YYYY/MM/DD</span>
+          <p class="devlog-description">I coded something</p>
+        </div>
+
+         <div class="devlog">
+          <span class="devlog-title">Devlog 2</span>
+          <span class="devlog-date">Ima code this later</span>
+          <p class="devlog-description">I also coded this</p>
+        </div>
+      </div>
+    </div>
+    <div id="chat" class="content out">
+      <h2>Chat</h2>
+      <div id="chat-container"></div>
+      <input type="color" name="colour" id="colour" value="#ffffff">
+      <input type="text" id="username" placeholder="Username" maxlength="15">
+      <input type="text" id="message" placeholder="Message" maxlength="200">
+    </div>
+    <div id="extra" class="content out">
+      <h2>Extra</h2>
+      <div id="extra-content">
+        <p>idk what to put here</p>
+        <p>here, take a link to my analytics ig</p>
+        <a href="https://analytics.silverspace.io" target="_blank">Analytics</a>
+      </div>
+    </div>
+    
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

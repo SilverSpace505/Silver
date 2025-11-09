@@ -1,0 +1,147 @@
+
+#info h2 {
+  position: relative;
+}
+
+#info h2.hide {
+  translate: 0 50rem;
+}
+
+#info h3 {
+  font-size: 40rem;
+  line-height: 30rem;
+  text-shadow: 0 4rem #555, 0 0 8rem black, 0 4rem 8rem black;
+  width: 500rem;
+  transition: translate var(--switch) ease;
+}
+
+#info h3:nth-child(1).hide {
+  translate: 0 -50rem;
+}
+
+#info h3:nth-child(5).hide {
+  translate: 50rem 0;
+}
+
+#info h4 {
+  font-size: 18rem;
+  color: #ccc;
+  text-shadow: 0 2rem #333, 0 0 4rem black, 0 2rem 4rem black;
+  transition: translate var(--switch) ease;
+}
+
+#info h4.hide {
+  translate: 0 50rem;
+}
+
+#info h4 span {
+  color: #007eac;
+  text-shadow: 0 2rem #002b3a, 0 0 4rem black, 0 2rem 4rem black;
+}
+
+#info p {
+  font-size: 30rem;
+  text-shadow: 0 3rem #555, 0 0 6rem black, 0 3rem 6rem black;
+}
+
+#info p.hide {
+  translate: -50rem 0;
+}
+
+#info p:nth-child(2) {
+  transition: translate calc(var(--switch) * 0.667) ease;
+}
+
+#info p:nth-child(3) {
+  transition: translate var(--switch) ease;
+}
+
+#info p:nth-child(4) {
+  transition: translate calc(var(--switch) * 1.333) ease;
+}
+
+#info p:nth-child(6) {
+  transition: translate calc(var(--switch) * 1.667) ease;
+}
+
+#about-me {
+  width: 500rem;
+  padding: 10rem 10rem;
+  padding-left: 60rem;
+  height: calc(100% - 150rem);
+  translate: -50rem -25rem;
+  overflow: auto;
+  -webkit-mask-image: linear-gradient(to bottom,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to bottom,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+#pf-img {
+  width: 500rem;
+  height: 500rem;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  translate: -25% -50%;
+  border-radius: 50%;
+  transition: scale var(--switch) ease;
+  scale: 1;
+  box-shadow: 0 0 30rem skyblue;
+}
+
+#pf-img.hide {
+  scale: 0;
+}
+
+#info a img {
+  width: 75rem;
+  height: 75rem;
+  margin-right: 25rem;
+  scale: 1;
+  position: relative;
+  z-index: 10;
+}
+
+#info a img:hover {
+  scale: 1.15;
+}
+
+#info a img.hide {
+  translate: 0 100rem;
+}
+
+#links {
+  position: absolute;
+  right: 0;
+  top: calc(50% + 275rem);
+  translate: -25% 0;
+  width: 500rem;
+  height: 100rem;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+#links a:nth-child(1) img {
+  filter: drop-shadow(0 0 5rem purple) drop-shadow(0 0 10rem purple);
+  transition: scale 0.25s ease, translate calc(var(--switch) * 0.667) ease;
+}
+
+#links a:nth-child(2) img {
+  filter: drop-shadow(0 0 10rem red);
+  transition: scale 0.25s ease, translate var(--switch) ease;
+}
+
+#links a:nth-child(3) img {
+  filter: drop-shadow(0 0 10rem orange);
+  transition: scale 0.25s ease, translate calc(var(--switch) * 1.333) ease;
+}

@@ -1,0 +1,191 @@
+h2 {
+  font-size: 75rem;
+  text-shadow: 0 7.5rem #555, 0 0 15rem black, 0 7.5rem 15rem black;
+  text-align: center;
+  margin: 20rem 0;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  pointer-events: none;
+  transition: translate var(--switch) ease;
+}
+
+h2.hide {
+  translate: 0 -50rem;
+}
+
+#games #games-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
+  align-content: flex-start;
+  justify-content: center;
+  /* align-items: flex-start; */
+  padding: 20rem;
+  width: 100%;
+  height: calc(100% - 150rem);
+  border-radius: 50rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2.5rem white solid;
+  overflow: auto;
+  position: relative;
+  z-index: 10;
+  /* gap: 10rem; */
+}
+
+#games-top {
+  display: flex;
+  position: relative;
+  align-items: center;
+  height: 100rem
+}
+
+.right {
+  position: absolute;
+  right: 0;
+  z-index: 10;
+}
+
+select {
+  font-size: 30rem;
+  font-family: font;
+  text-shadow: 0 3rem #555, 0 0 10rem black, 0 3rem 10rem black;
+  position: relative;
+  z-index: 11;
+  margin-right: 50rem;
+  width: 150rem;
+  height: 45rem;
+  border-radius: 40rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: 2.5rem solid white;
+  padding: 0 10rem;
+  transition: translate calc(var(--switch) * 0.667) ease;
+}
+
+select.hide {
+  translate: 0 -25rem;
+}
+
+select:nth-child(2) {
+  transition: translate calc(var(--switch) * 1.333) ease;
+}
+
+input {
+  font-size: 30rem;
+  font-family: font;
+  text-shadow: 0 3rem #555, 0 0 10rem black, 0 3rem 10rem black;
+  position: relative;
+  z-index: 10;
+  border-radius: 40rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: 2.5rem solid white;
+  padding: 0 10rem;
+  margin-left: 50rem;
+  width: calc(35% - 80rem);
+  height: 45rem;
+  transition: translate var(--switch) ease;
+}
+
+input.hide {
+  translate: -100rem 0;
+}
+
+.game {
+  width: 300rem;
+  height: 200rem;
+  margin: 5rem 5rem;
+  border-radius: 20rem;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  transition: all 0.3s ease-out;
+  z-index: 0;
+  cursor: pointer;
+}
+
+.game:hover {
+  scale: 1.05;
+  z-index: 2;
+  filter: brightness(1.1);
+  box-shadow: 0 0 20rem black;
+}
+
+.game-text {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  text-align: center;
+}
+
+.game-title, .game-description, .game-title-hide {
+  font-size: 30rem;
+  text-align: center;
+  color: white;
+  left: 50%;
+  translate: -50% 0;
+  width: 100%;
+  text-shadow: 0 3rem #555, 0 0 10rem black, 0 3rem 10rem black;
+  transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+}
+
+.game-title, .game-title-hide {
+  position: absolute;
+  bottom: 10rem;
+}
+
+.game-title-hide {
+  opacity: 0;
+}
+
+.game-description {
+  font-size: 20rem;
+  text-shadow: 0 2rem #555, 0 0 10rem black, 0 3rem 10rem black;
+}
+
+.game .game-description, .game .game-title-hide {
+  opacity: 0;
+}
+
+.game:hover .game-description, .game:hover .game-title-hide {
+  opacity: 1;
+}
+
+.game:hover .game-title, .game:hover .game-title-hide {
+  bottom: 100%;
+}
+
+.game-clicks {
+  position: absolute;
+  font-size: 20rem;
+  color: white;
+  left: 35rem;
+  top: 10rem;
+  text-shadow: 0 2rem #555, 0 0 6rem black, 0 0 6rem black;
+}
+
+.game-date {
+  position: absolute;
+  font-size: 15rem;
+  color: white;
+  right: 10rem;
+  top: 10rem;
+  text-shadow: 0 2rem #555, 0 0 6rem black, 0 0 6rem black;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.game:hover .game-date {
+  opacity: 1;
+}
+
+.game-clicks-icon {
+  position: absolute;
+  width: 25rem;
+  height: 25rem;
+  left: 10rem;
+  top: 10rem;
+  image-rendering: pixelated;
+}
