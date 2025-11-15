@@ -70,7 +70,8 @@
   padding-left: 60rem;
   height: calc(100% - 150rem);
   translate: -50rem -25rem;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   -webkit-mask-image: linear-gradient(to bottom,
     transparent 0%,
     black 10%,

@@ -189,3 +189,24 @@ input.hide {
   top: 10rem;
   image-rendering: pixelated;
 }
+
+.game-github {
+  position: absolute;
+  width: 25rem;
+  height: 25rem;
+  right: 10rem;
+  top: 30rem;
+  background-image: url(/github.png);
+  background-size: cover;
+  filter: drop-shadow(0 0 4rem purple) drop-shadow(0 0 2rem black);
+  opacity: 0;
+  transition: opacity 0.3s ease-out, scale 0.3s ease;
+}
+
+.game:hover .game-github {
+  opacity: 1;
+}
+
+.game:hover .game-github:hover {
+  scale: 1.1;
+}

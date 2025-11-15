@@ -68,6 +68,15 @@ nCallbacks.loadGames = (games) => {
     date.textContent = games[game].date;
     element.appendChild(date);
 
+    if (games[game].github) {
+      const githubBtn = document.createElement('a');
+      githubBtn.classList.add('game-github');
+      githubBtn.href = games[game].github;
+      githubBtn.target = '_blank';
+
+      element.appendChild(githubBtn);
+    }
+
     const textContainer = document.createElement('div');
     textContainer.classList.add('game-text');
     element.appendChild(textContainer);

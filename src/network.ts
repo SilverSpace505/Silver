@@ -9,6 +9,7 @@ export interface GameData {
   tags: string[];
   showTitle?: boolean;
   online?: boolean;
+  github?: string;
 }
 
 export interface ClicksData {
