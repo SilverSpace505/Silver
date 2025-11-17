@@ -1,11 +1,22 @@
-import {
-  nCallbacks,
-  sendMsg,
-  socket,
-  type ClicksData,
-  type GameData,
-} from './network';
+import { socket } from './network';
 import utils from './utils';
+
+interface GameData {
+  name: string;
+  description: string;
+  date: string;
+  link: string;
+  img: string;
+  tags: string[];
+  showTitle?: boolean;
+  online?: boolean;
+  github?: string;
+}
+
+interface ClicksData {
+  total: number;
+  views: boolean;
+}
 
 const gamesContainer = document.getElementById(
   'games-container',
@@ -24,97 +35,6 @@ const sort = document.getElementById('sort') as HTMLSelectElement;
 
 let gameData: Record<string, GameData> = {};
 let clickData: Record<string, ClicksData> = {};
-
-nCallbacks.loadGames = (games) => {
-  gameData = games;
-  for (const game in games) {
-    const link = document.createElement('a');
-    link.href = games[game].link;
-    link.target = '_blank';
-
-    link.addEventListener('click', () => {
-      if (socket.connected) {
-        let day = Math.floor(Date.now() / 1000 / 60 / 60 / 24) - 20102 + 382;
-        let clicked: null | { day: number; games: string[] } = null;
-        let clickedL = localStorage.getItem('clicked');
-        if (clickedL) clicked = JSON.parse(clickedL);
-        if (!clicked || clicked.day != day) {
-          clicked = { day, games: [] };
-        }
-        if (!clicked.games.includes(game)) {
-          clicked.games.push(game);
-          sendMsg({ click: game });
-          sendMsg({ getClicks: true });
-        }
-        localStorage.setItem('clicked', JSON.stringify(clicked));
-      }
-      sendMsg({ aclick: game });
-    });
-
-    const element = document.createElement('div');
-    element.classList.add('game');
-
-    const clicksIcon = document.createElement('img');
-    clicksIcon.classList.add('game-clicks-icon');
-    element.appendChild(clicksIcon);
-
-    const clicks = document.createElement('span');
-    clicks.classList.add('game-clicks');
-    clicks.textContent = 'clicks';
-    element.appendChild(clicks);
-
-    const date = document.createElement('span');
-    date.classList.add('game-date');
-    date.textContent = games[game].date;
-    element.appendChild(date);
-
-    if (games[game].github) {
-      const githubBtn = document.createElement('a');
-      githubBtn.classList.add('game-github');
-      githubBtn.href = games[game].github;
-      githubBtn.target = '_blank';
-
-      element.appendChild(githubBtn);
-    }
-
-    const textContainer = document.createElement('div');
-    textContainer.classList.add('game-text');
-    element.appendChild(textContainer);
-
-    const description = document.createElement('span');
-    description.classList.add('game-description');
-    description.textContent = games[game].description;
-    textContainer.appendChild(description);
-
-    const title = document.createElement('span');
-    title.classList.add(
-      games[game].showTitle ? 'game-title' : 'game-title-hide',
-    );
-    title.textContent = games[game].name;
-    textContainer.appendChild(title);
-
-    element.style.backgroundImage = `url(${games[game].img})`;
-
-    gameElements[game] = { div: link, text: clicks, icon: clicksIcon };
-    gameList.push(game);
-
-    link.appendChild(element);
-    gamesContainer.appendChild(link);
-  }
-};
-
-nCallbacks.loadClicks = (clicks) => {
-  clickData = clicks;
-  for (const game in clicks) {
-    if (game in gameElements) {
-      gameElements[game].icon.src = clicks[game].views
-        ? '/view-2.png'
-        : '/click-2.png';
-      gameElements[game].text.textContent = clicks[game].total + '';
-    }
-  }
-  manageGames();
-};
 
 const mouse = { x: 0, y: 0 };
 
@@ -197,3 +117,98 @@ function manageGames() {
     gamesContainer.appendChild(gameElements[game].div);
   }
 }
+
+socket.on('connect', () => {
+  socket.emit('fetchGames', (games: Record<string, GameData>) => {
+    gameData = games;
+    for (const game in games) {
+      const link = document.createElement('a');
+      link.href = games[game].link;
+      link.target = '_blank';
+
+      link.addEventListener('click', () => {
+        if (socket.connected) {
+          let day = Math.floor(Date.now() / 1000 / 60 / 60 / 24) - 20102 + 382;
+          let clicked: null | { day: number; games: string[] } = null;
+          let clickedL = localStorage.getItem('clicked');
+          if (clickedL) clicked = JSON.parse(clickedL);
+          if (!clicked || clicked.day != day) {
+            clicked = { day, games: [] };
+          }
+          if (!clicked.games.includes(game)) {
+            clicked.games.push(game);
+            socket.emit('click', game);
+            socket.emit('getClicks');
+          }
+          localStorage.setItem('clicked', JSON.stringify(clicked));
+        }
+        socket.emit('aclick', game);
+      });
+
+      const element = document.createElement('div');
+      element.classList.add('game');
+
+      const clicksIcon = document.createElement('img');
+      clicksIcon.classList.add('game-clicks-icon');
+      element.appendChild(clicksIcon);
+
+      const clicks = document.createElement('span');
+      clicks.classList.add('game-clicks');
+      clicks.textContent = 'clicks';
+      element.appendChild(clicks);
+
+      const date = document.createElement('span');
+      date.classList.add('game-date');
+      date.textContent = games[game].date;
+      element.appendChild(date);
+
+      if (games[game].github) {
+        const githubBtn = document.createElement('a');
+        githubBtn.classList.add('game-github');
+        githubBtn.href = games[game].github;
+        githubBtn.target = '_blank';
+
+        element.appendChild(githubBtn);
+      }
+
+      const textContainer = document.createElement('div');
+      textContainer.classList.add('game-text');
+      element.appendChild(textContainer);
+
+      const description = document.createElement('span');
+      description.classList.add('game-description');
+      description.textContent = games[game].description;
+      textContainer.appendChild(description);
+
+      const title = document.createElement('span');
+      title.classList.add(
+        games[game].showTitle ? 'game-title' : 'game-title-hide',
+      );
+      title.textContent = games[game].name;
+      textContainer.appendChild(title);
+
+      element.style.backgroundImage = `url(${games[game].img})`;
+
+      gameElements[game] = { div: link, text: clicks, icon: clicksIcon };
+      gameList.push(game);
+
+      link.appendChild(element);
+      gamesContainer.appendChild(link);
+    }
+  });
+
+  socket.emit('getClicks');
+});
+
+socket.on('getClicks', (clicks: Record<string, ClicksData>) => {
+  clickData = clicks;
+  for (const game in clicks) {
+    if (game in gameElements) {
+      gameElements[game].icon.src = clicks[game].views
+        ? '/view-2.png'
+        : '/click-2.png';
+      gameElements[game].text.textContent = clicks[game].total + '';
+    }
+  }
+  manageGames();
+});

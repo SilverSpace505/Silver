@@ -1,4 +1,11 @@
-import { nCallbacks, sendMsg } from './network';
+import { socket } from './network';
+
+interface ServerMessage {
+  user: string;
+  colour: string;
+  text: string;
+  time: string;
+}
 
 const chatContainer = document.getElementById(
   'chat-container',
@@ -140,26 +147,22 @@ message.addEventListener('keydown', (event) => {
       time: new Date(),
     });
 
-    sendMsg({
-      chat: {
-        user: username.value,
-        text: message.value,
-        colour: colour.value,
-      },
-    });
+    socket.emit('chat', username.value, message.value, colour.value);
 
     message.value = '';
   }
 });
 
-nCallbacks.loadChat = (msgs) => {
-  loadChat(
-    msgs.map((a) => {
-      return { ...a, time: new Date(a.time) };
-    }),
-  );
-};
+socket.on('connect', () => {
+  socket.emit('getChat', (msgs: ServerMessage[]) => {
+    loadChat(
+      msgs.map((a) => {
+        return { ...a, time: new Date(a.time) };
+      }),
+    );
+  });
+});
 
-nCallbacks.loadMsg = (msg) => {
+socket.on('chat', (msg: ServerMessage) => {
   loadMessage({ ...msg, time: new Date(msg.time) });
-};
+});
