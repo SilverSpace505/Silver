@@ -15,6 +15,10 @@
   top: 50%;
   translate: -50% -50%;
   text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
 }
 
 #extra p, #extra a {
@@ -22,6 +26,12 @@
   font-family: font;
   text-shadow: 0 3rem #555, 0 0 10rem black, 0 3rem 10rem black;
   transition: translate var(--switch) ease;
+  display: flex;
+  line-height: 20rem;
+}
+
+#extra p a {
+  margin-left: 10rem;
 }
 
 #extra p.hide, #extra a.hide {
@@ -42,4 +52,8 @@
 #extra a:visited {
   color: rgb(150, 0, 255);
   text-shadow: 0 3rem rgb(40, 0, 70), 0 0 10rem black, 0 3rem 10rem black;
+}
+
+#extra p a.hide {
+  translate: 0 0;
 }
