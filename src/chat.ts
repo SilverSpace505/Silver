@@ -154,7 +154,7 @@ message.addEventListener('keydown', (event) => {
 });
 
 socket.on('connect', () => {
-  socket.emit('getChat', (msgs: ServerMessage[]) => {
+  socket.emit('get_chat', (msgs: ServerMessage[]) => {
     loadChat(
       msgs.map((a) => {
         return { ...a, time: new Date(a.time) };

@@ -91,9 +91,11 @@ function animate() {
   const delta = (performance.now() - lastTime) / 1000;
   lastTime = performance.now();
 
-  anticlick('pyramids-of-giza', scale, delta);
+  anticlick('pyramids_of_giza', scale, delta);
 
   requestAnimationFrame(animate);
 }
 
 requestAnimationFrame(animate);
+
+console.log("pens") // haha trolled - Henry

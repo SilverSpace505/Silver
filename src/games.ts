@@ -119,11 +119,15 @@ function manageGames() {
 }
 
 socket.on('connect', () => {
-  socket.emit('fetchGames', (games: Record<string, GameData>) => {
-    gameData = games;
-    for (const game in games) {
+  socket.emit('fetch_games', (games: [string, GameData][]) => {
+    const gamesO: Record<string, GameData> = {};
+    for (const game of games) {
+      gamesO[game[0]] = game[1]
+    }
+    gameData = gamesO;
+    for (const game in gamesO) {
       const link = document.createElement('a');
-      link.href = games[game].link;
+      link.href = gamesO[game].link;
       link.target = '_blank';
 
       link.addEventListener('click', () => {
@@ -136,13 +140,15 @@ socket.on('connect', () => {
             clicked = { day, games: [] };
           }
           if (!clicked.games.includes(game)) {
-            clicked.games.push(game);
+            socket.emit('uclick', game, () => {
+              socket.emit('get_clicks');
+              clicked.games.push(game);
+              localStorage.setItem('clicked', JSON.stringify(clicked));
+            });
+          } else {
             socket.emit('click', game);
-            socket.emit('getClicks');
           }
-          localStorage.setItem('clicked', JSON.stringify(clicked));
         }
-        socket.emit('aclick', game);
       });
 
       const element = document.createElement('div');
@@ -154,18 +160,18 @@ socket.on('connect', () => {
 
       const clicks = document.createElement('span');
       clicks.classList.add('game-clicks');
-      clicks.textContent = 'clicks';
+      clicks.textContent = '';
       element.appendChild(clicks);
 
       const date = document.createElement('span');
       date.classList.add('game-date');
-      date.textContent = games[game].date;
+      date.textContent = gamesO[game].date;
       element.appendChild(date);
 
-      if (games[game].github) {
+      if (gamesO[game].github) {
         const githubBtn = document.createElement('a');
         githubBtn.classList.add('game-github');
-        githubBtn.href = games[game].github;
+        githubBtn.href = gamesO[game].github;
         githubBtn.target = '_blank';
 
         element.appendChild(githubBtn);
@@ -177,17 +183,17 @@ socket.on('connect', () => {
 
       const description = document.createElement('span');
       description.classList.add('game-description');
-      description.textContent = games[game].description;
+      description.textContent = gamesO[game].description;
       textContainer.appendChild(description);
 
       const title = document.createElement('span');
       title.classList.add(
-        games[game].showTitle ? 'game-title' : 'game-title-hide',
+        gamesO[game].showTitle ? 'game-title' : 'game-title-hide',
       );
-      title.textContent = games[game].name;
+      title.textContent = gamesO[game].name;
       textContainer.appendChild(title);
 
-      element.style.backgroundImage = `url(${games[game].img})`;
+      element.style.backgroundImage = `url(${gamesO[game].img})`;
 
       gameElements[game] = { div: link, text: clicks, icon: clicksIcon };
       gameList.push(game);
@@ -195,12 +201,11 @@ socket.on('connect', () => {
       link.appendChild(element);
       gamesContainer.appendChild(link);
     }
+    socket.emit('get_clicks');
   });
-
-  socket.emit('getClicks');
 });
 
-socket.on('getClicks', (clicks: Record<string, ClicksData>) => {
+socket.on('get_clicks', (clicks: Record<string, ClicksData>) => {
   clickData = clicks;
   for (const game in clicks) {
     if (game in gameElements) {

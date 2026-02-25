@@ -32,7 +32,9 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  filter: drop-shadow(0 0 10rem white);
+  width: 300rem;
+  height: 300rem;
+  /* filter: drop-shadow(0 0 10rem white); */
   animation: slow-rotate 10s ease-in-out infinite;
   transition: scale var(--switch) ease, translate var(--switch) ease;
   scale: 1;
@@ -93,10 +95,10 @@
 #img3 {
   left: calc(50% + 250rem);
   top: calc(50% + 100rem);
-  background-image: url('/games/battle-cubes.webp');
-  background-position: 50% 0;
-  background-size: cover;
-  box-shadow: 0 0 20rem grey;
+  background-image: url('/games/gpu-life.png');
+  background-position: -40% 0;
+  background-size: 200%;
+  box-shadow: 0 0 20rem rgb(0, 114, 131);
   animation: float 3.5s ease-in-out infinite;
   animation-delay: 2s;
   transition: scale calc(var(--switch) * 1.333) ease, translate calc(var(--switch) * 1.333) ease;
@@ -128,15 +130,15 @@
 @keyframes slow-rotate {
   from {
     transform: translate(-50%, -50%) rotate(-5deg) scale(1);
-    filter: drop-shadow(0 0 10rem white);
+    filter: drop-shadow(0 0 2rem black);
   }
   50% {
     transform: translate(-50%, -50%) rotate(5deg) scale(1.1);
-    filter: drop-shadow(0 0 5rem white);
+    filter: drop-shadow(0 0 1rem black);
   }
   to {
     transform: translate(-50%, -50%) rotate(-5deg) scale(1);
-    filter: drop-shadow(0 0 10rem white);
+    filter: drop-shadow(0 0 2rem black);
   }
 }
 

@@ -89,14 +89,17 @@
 #pf-img {
   width: 500rem;
   height: 500rem;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  translate: -25% -50%;
+  /* position: absolute; */
+  /* left: 800rem; */
+  /* top: 50%; */
+  /* translate: -25% -50%; */
+  translate: 0 calc(-100% - 25rem);
   border-radius: 50%;
   transition: scale var(--switch) ease;
-  scale: 1;
-  box-shadow: 0 0 30rem skyblue;
+  scale: 1.25;
+  /* box-shadow: 0 0 30rem black; */
+  border: none;
+  /* background: radial-gradient(circle, #000000ff 30%, #00000000 60%); */
 }
 
 #pf-img.hide {
@@ -120,7 +123,7 @@
   translate: 0 100rem;
 }
 
-#links {
+#links, #pf {
   position: absolute;
   right: 0;
   top: calc(50% + 275rem);
@@ -143,6 +146,11 @@
 }
 
 #links a:nth-child(3) img {
-  filter: drop-shadow(0 0 10rem orange);
+  filter: drop-shadow(0 0 10rem rgb(255, 77, 0));
   transition: scale 0.25s ease, translate calc(var(--switch) * 1.333) ease;
+}
+
+#links a:nth-child(4) img {
+  filter: drop-shadow(0 0 10rem orange);
+  transition: scale 0.25s ease, translate calc(var(--switch) * 1.667) ease;
 }
