@@ -1,13 +1,14 @@
 import { socket } from './network';
-import './games';
-import { anticlick } from './games';
+import './projects';
+import { anticlick } from './projects';
 
 import './devlogs';
 import './chat';
+import { extratick } from './extra';
 
 const targetSize = { x: 1250, y: 1000 };
 
-const pages = ['silver', 'games', 'info', 'devlogs', 'chat', 'extra'];
+const pages = ['silver', 'projects', 'me', 'devlogs', 'chat', 'extra'];
 
 const pageDivs: Record<string, HTMLDivElement> = {};
 
@@ -80,7 +81,13 @@ window.onresize = () => {
 window.dispatchEvent(new Event('resize'));
 
 setTimeout(() => {
-  switchPage('silver');
+  if (location.pathname == '/me') {
+    switchPage('me');
+    buttons['silver'].disabled = false;
+    buttons['me'].disabled = true;
+  } else {
+    switchPage('silver');
+  }
 });
 
 let lastTime = 0;
@@ -93,9 +100,9 @@ function animate() {
 
   anticlick('pyramids_of_giza', scale, delta);
 
+  extratick(currentPage, delta);
+
   requestAnimationFrame(animate);
 }
 
 requestAnimationFrame(animate);
-
-console.log("pens") // haha trolled - Henry

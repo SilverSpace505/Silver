@@ -97,3 +97,11 @@
   user-select: all;
   box-shadow: 0 2rem 10rem #00ff7f
 }
+
+.cursor {
+  position: absolute;
+  width: 22rem;
+  height: 30rem;
+  background-image: url("/cursor.png");
+  background-size: contain;
+}
