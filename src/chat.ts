@@ -160,6 +160,7 @@ socket.on('connect', () => {
         return { ...a, time: new Date(a.time) };
       }),
     );
+    chatContainer.scrollTop = chatContainer.scrollHeight;
   });
 });
 

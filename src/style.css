@@ -216,3 +216,19 @@ iframe {
   top: 50%;
   transform: translate(-50%, -100%)
 }
+
+h2 {
+  font-size: 75rem;
+  text-shadow: 0 7.5rem #555, 0 0 15rem black, 0 7.5rem 15rem black;
+  text-align: center;
+  margin: 20rem 0;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  pointer-events: none;
+  transition: translate var(--switch) ease;
+}
+
+h2.hide {
+  translate: 0 -50rem;
+}

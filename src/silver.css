@@ -59,7 +59,7 @@
 }
 
 #silver #images #img1 {
-  background-image: url('/devlogs/shadows.webp');
+  background-image: url('/devlog/shadows.webp');
   background-size: cover;
   background-position: -80rem 0;
   left: calc(50% + 150rem);
@@ -83,7 +83,7 @@
 #img2 {
   left: calc(50% - 200rem);
   top: calc(50% + 150rem);
-  background-image: url('/devlogs/the-farlands.webp');
+  background-image: url('/devlog/the-farlands.webp');
   background-position: 50% 50%;
   background-size: 300%;
   box-shadow: 0 0 20rem lightgreen;

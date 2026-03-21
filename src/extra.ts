@@ -2,21 +2,25 @@ import { socket } from "./network";
 import utils from "./utils";
 
 let sendCooldown = 0;
-let current = false;
+let current = '';
 
 export function extratick(currentPage: string, delta: number) {
     
-    if (currentPage == 'extra') {
-        sendCooldown -= delta;
-    } else {
-        cursor.v = false;
-        if (current) {
-            socket.emit('remove_cursor');
-        }
-    }
-    current = currentPage == 'extra';
+    // if (currentPage == 'extra') {
+    //     sendCooldown -= delta;
+    // } else {
+    //     cursor.v = false;
+    //     if (current) {
+    //         socket.emit('remove_cursor');
+    //     }
+    // }
+    current = currentPage;
+    sendCooldown -= delta;
+
+    // current = currentPage == 'extra';
 
     if (sendCooldown <= 0) {
+        cursor.page = currentPage;
         socket.emit('cursor', cursor);
         sendCooldown = 1 / 20;
     }
@@ -30,20 +34,21 @@ export function extratick(currentPage: string, delta: number) {
         cursorE[2].style.left = `${cursorE[0][0] * 100}%`;
         cursorE[2].style.top = `${cursorE[0][1] * 100}%`;
 
-        if (currentPage != 'extra') {
-            cursorE[2].remove();
-            delete cursorElements[cursor];
-        }
+        // if (currentPage != 'extra') {
+        //     cursorE[2].remove();
+        //     delete cursorElements[cursor];
+        // }
     }
 }
 
 interface Cursor {
     x: number,
     y: number,
-    v: boolean,
+    v: boolean
+    page: string,
 }
 
-const cursor: Cursor = {x: 0, y: 0, v: false};
+const cursor: Cursor = {x: 0, y: 0, v: false, page: ''};
 
 document.onmousemove = (event) => {
     cursor.x = event.clientX / window.innerWidth;
@@ -51,7 +56,17 @@ document.onmousemove = (event) => {
     cursor.v = event.clientX >= 0 && event.clientX <= window.innerWidth && event.clientY >= 0 && event.clientY <= window.innerHeight;
 };
 
+document.onmouseover = () => {
+    cursor.v = true;
+};
+document.onmouseenter = () => {
+    cursor.v = true;
+};
+
 document.onmouseout = () => {
+    cursor.v = false;
+};
+document.onmouseleave = () => {
     cursor.v = false;
 };
 
@@ -77,6 +92,6 @@ socket.on('cursors', (cursors: Record<string, Cursor>) => {
 
         cursorElements[cursor][1] = [cursors[cursor].x, cursors[cursor].y];
 
-        cursorElements[cursor][2].style.display = cursors[cursor].v ? 'block' : 'none';
+        cursorElements[cursor][2].style.display = (cursors[cursor].v && cursors[cursor].page == current) ? 'block' : 'none';
     }
 });

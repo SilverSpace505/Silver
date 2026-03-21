@@ -59,9 +59,15 @@
   transition: translate calc(var(--switch) * 1.333) ease;
 }
 
-#me p:nth-child(6) {
+#me p:nth-child(6),
+#me p:nth-child(7),
+#me p:nth-child(8),
+#me p:nth-child(9),
+#me p:nth-child(10),
+#me p:nth-child(11) {
   transition: translate calc(var(--switch) * 1.667) ease;
 }
+
 
 #about-me {
   width: 500rem;

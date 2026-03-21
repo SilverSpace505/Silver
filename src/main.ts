@@ -41,6 +41,8 @@ for (const page of pages) {
 }
 
 function switchPage(target: string) {
+  history.pushState(null, '', target == 'silver' ? '/' : `/${target}`);
+
   if (currentPage) {
     buttons[currentPage].disabled = false;
     pageDivs[currentPage].classList.add('out');
@@ -81,10 +83,11 @@ window.onresize = () => {
 window.dispatchEvent(new Event('resize'));
 
 setTimeout(() => {
-  if (location.pathname == '/me') {
-    switchPage('me');
+  const path = location.pathname.slice(1);
+  if (path && pages.includes(path) && path != 'silver') {
+    switchPage(path);
     buttons['silver'].disabled = false;
-    buttons['me'].disabled = true;
+    buttons[path].disabled = true;
   } else {
     switchPage('silver');
   }
