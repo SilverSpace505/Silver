@@ -15,6 +15,24 @@ chatContainer.addEventListener('wheel', (e) => {
   e.stopPropagation();
 }, { passive: false })
 
+chatContainer.onscroll = () => {
+  if (chatContainer.scrollTop < 500 && !fetching) {
+    page++
+    fetching = true;
+    const beforeHeight = chatContainer.scrollHeight;
+    const beforeTop = chatContainer.scrollTop;
+    socket.emit('get_chat', page, (msgs: ServerMessage[]) => {
+      loadChat(
+        msgs.map((a) => {
+          return { ...a, time: new Date(a.time) };
+        }),
+      );
+      fetching = false;
+      chatContainer.scrollTop = beforeTop + (chatContainer.scrollHeight - beforeHeight);
+    });
+  }
+}
+
 const username = document.getElementById('username') as HTMLInputElement;
 const message = document.getElementById('message') as HTMLInputElement;
 const colour = document.getElementById('colour') as HTMLInputElement;
@@ -43,6 +61,10 @@ interface Message {
 let lastUser = '';
 let lastMsg: HTMLDivElement | null = null;
 let lastMsgTime: Date | null = null;
+let page = 0;
+let fetching = false;
+
+let allChat: Message[] = [];
 
 function halfColour(hex: string) {
   hex = hex.replace(/^#/, '');
@@ -120,7 +142,8 @@ function loadMessage(msg: Message) {
 
 function loadChat(msgs: Message[]) {
   chatContainer.innerHTML = '';
-  for (const msg of msgs) {
+  allChat = [...msgs, ...allChat];
+  for (const msg of allChat) {
     loadMessage(msg);
   }
 }
@@ -158,7 +181,13 @@ message.addEventListener('keydown', (event) => {
 });
 
 socket.on('connect', () => {
-  socket.emit('get_chat', (msgs: ServerMessage[]) => {
+  page = 0;
+  allChat = [];
+  lastUser = '';
+  lastMsg = null;
+  lastMsgTime = null;
+  fetching = false;
+  socket.emit('get_chat', page, (msgs: ServerMessage[]) => {
     loadChat(
       msgs.map((a) => {
         return { ...a, time: new Date(a.time) };

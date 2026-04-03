@@ -54,9 +54,9 @@ function switchPage(target: string) {
     const elements = pageDivs[currentPage].querySelectorAll('*');
     elements.forEach((el) => el.classList.add('hide'));
 
-    buttons[currentPage].style.animation = 'none';
+    // buttons[currentPage].style.animation = 'none';
     void buttons[currentPage].offsetHeight;
-    setTimeout(() => (buttons[currentPage].style.animation = ''));
+    // setTimeout(() => (buttons[currentPage].style.animation = ''));
   }
   currentPage = target;
   pageDivs[target].classList.remove('out');

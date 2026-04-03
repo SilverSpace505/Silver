@@ -3,6 +3,8 @@
   --width: 0;
   --height: 0;
   --switch: 1s;
+  --title: 2s;
+  --buttons: 2s;
 }
 
 @font-face {
@@ -30,7 +32,6 @@ html {
 h1 {
   text-align: center;
   font-size: 100rem;
-  text-shadow: 0 10rem #555, 0 0 20rem black, 0 10rem 20rem black;
 }
 
 canvas {
@@ -54,40 +55,46 @@ canvas {
   font-size: 50rem;
   text-shadow: 0 5rem #555, 0 0 10rem black, 0 5rem 10rem black;
   position: relative;
-  width: 325rem;
+  width: 425rem;
   height: 75rem;
   text-align: left;
   border: none;
-  padding-left: 30rem;
+  padding-left: 130rem;
   color: white;
   transition: width 0.2s ease-out, padding-left 0.2s ease-out, all 0.2s ease-out;
+  background-color: var(--btnColour);
+  filter: drop-shadow(0 10rem 5rem var(--btnColour));
+  animation: shift var(--buttons) ease-in-out infinite alternate;
+  translate: -100rem 0;
 }
 
-button::after {
-  content: "";
+button svg {
   position: absolute;
-  top: 50%;
   left: 99.9%;
-  transform: translateY(-50%);
+  top: 0;
   width: 75rem;
   height: 75rem;
-  background: inherit;
-  clip-path: polygon(0 0, 100% 0%, 0 100%);
+  fill: var(--btnColour);
+}
+
+@keyframes shift {
+  from { translate: -100rem 0; }
+  to { translate: -90rem 0; }
 }
 
 #pages button:hover {
-  width: 362.5rem;
-  padding-left: 67.5rem;
+  width: 462.5rem;
+  padding-left: 167.5rem;
 }
 
 #pages button:disabled {
-  width: 287.5rem;
-  padding-left: 20rem;
+  width: 337.5rem;
+  padding-left: 120rem;
   opacity: 0.5;
 }
 
 #pages button:disabled {
-  translate: -10rem 0;
+  translate: -100rem 0;
 }
 
 .sideClick {
@@ -141,28 +148,34 @@ button::after {
   }
 }
 
-#silverBtn {
-  background-color: rgba(0, 127, 255, var(--btnAlpha));
+#pages #silverBtn {
+  --btnColour: rgba(0, 127, 255, var(--btnAlpha));
+  animation-delay: 0;
 }
 
-#projectsBtn {
-  background-color: rgba(255, 0, 0, var(--btnAlpha));
+#pages #projectsBtn {
+  --btnColour: rgba(255, 0, 0, var(--btnAlpha));
+  animation-delay: calc(var(--buttons) / 5 * 1);
 }
 
-#meBtn {
-  background-color: rgba(255, 127, 0, var(--btnAlpha));
+#pages #meBtn {
+  --btnColour: rgba(255, 127, 0, var(--btnAlpha));
+  animation-delay: calc(var(--buttons) / 5 * 2);
 }
 
-#devlogsBtn {
-  background-color: rgba(255, 255, 0, var(--btnAlpha));
+#pages #devlogsBtn {
+  --btnColour: rgba(255, 255, 0, var(--btnAlpha));
+  animation-delay: calc(var(--buttons) / 5 * 3);
 }
 
-#chatBtn {
-  background-color: rgba(0, 255, 0, var(--btnAlpha));
+#pages #chatBtn {
+  --btnColour: rgba(0, 255, 0, var(--btnAlpha));
+  animation-delay: calc(var(--buttons) / 5 * 4);
 }
 
-#extraBtn {
-  background-color: rgba(127, 127, 127, var(--btnAlpha));
+#pages #extraBtn {
+  --btnColour: rgba(127, 127, 127, var(--btnAlpha));
+  animation-delay: calc(var(--buttons) / 5 * 5);
 }
 
 #page {
@@ -261,7 +274,41 @@ iframe {
 #title h1 {
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -100%)
+  transform: translate(-50%, -50%);
+  display: block;
+  font-size: 0;
+  filter: drop-shadow(0 10rem #555) drop-shadow(0 0 10rem black) drop-shadow(0 10rem 10rem black);
+  /* text-shadow: 0 10rem #555, 0 0 20rem black, 0 10rem 20rem black; */
+}
+
+#title span {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  font-size: 100rem;
+  animation: bob var(--title) ease-in-out infinite alternate;
+}
+
+@keyframes bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5rem); }
+}
+
+#title span:nth-child(2) {
+  animation-delay: calc(var(--title) / 5 * 1);
+}
+#title span:nth-child(3) {
+  animation-delay: calc(var(--title) / 5 * 2);
+}
+#title span:nth-child(4) {
+  animation-delay: calc(var(--title) / 5 * 3);
+}
+#title span:nth-child(5) {
+  animation-delay: calc(var(--title) / 5 * 4);
+}
+#title span:nth-child(6) {
+  animation-delay: calc(var(--title) / 5 * 5);
 }
 
 h2 {
@@ -278,4 +325,29 @@ h2 {
 
 h2.hide {
   translate: 0 -50rem;
+}
+
+#title svg {
+  animation: title-anim 10s ease-in-out infinite;
+}
+
+@keyframes title-anim {
+  from {
+    rotate: 0deg;
+    scale: 1;
+    filter: drop-shadow(0 0 2rem black);
+  }
+  33% {
+    scale: 1.1;
+  }
+  50% {
+    rotate: 5deg;
+    scale: 1.05;
+    filter: drop-shadow(0 0 1rem black);
+  }
+  to {
+    rotate: 0deg;
+    scale: 1;
+    filter: drop-shadow(0 0 2rem black);
+  }
 }
