@@ -22,6 +22,10 @@ const projectsContainer = document.getElementById(
   'projects-container',
 ) as HTMLDivElement;
 
+projectsContainer.addEventListener('wheel', (e) => {
+  e.stopPropagation();
+}, { passive: false })
+
 const projectElements: Record<
   string,
   { text: HTMLSpanElement; icon: HTMLImageElement; div: HTMLAnchorElement }

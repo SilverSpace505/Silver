@@ -4,15 +4,19 @@ import { anticlick } from './projects';
 
 import './devlogs';
 import './chat';
+import './me';
 import { extratick } from './extra';
+import utils from './utils';
 
-const targetSize = { x: 1250, y: 1000 };
+const targetSize = { x: 1600, y: 1000 };
 
 const pages = ['silver', 'projects', 'me', 'devlogs', 'chat', 'extra'];
 
 const pageDivs: Record<string, HTMLDivElement> = {};
 
 const buttons: Record<string, HTMLButtonElement> = {};
+
+const pageDiv = document.getElementById('page') as HTMLDivElement;
 
 let currentPage = '';
 
@@ -105,7 +109,47 @@ function animate() {
 
   extratick(currentPage, delta);
 
+  if (scrollable <= 0) {
+    scrolling = utils.lerp5(scrolling, 0, delta * 10);
+  } else if (scrollable <= 0.2) {
+    scrolling = utils.lerp5(scrolling, 0, delta * 10);
+  }
+  scrollable -= delta;
+  // console.log(scrolling, (1 - Math.abs(scrolling) / 50) ** 5 * 100);
+
+  // let scrolled = Math.max(0, Math.abs(scrolling) / 50 - 0.5);
+  
+  // pageDiv.style.opacity = `${(1 - scrolled) ** 5 * 100}%`;
+
+  for (const page in pageDivs) {
+    pageDivs[page].style.translate = `0 ${scrolling}rem`;
+  }
+
   requestAnimationFrame(animate);
 }
 
 requestAnimationFrame(animate);
+
+let scrolling = 0;
+let scrollable = 0;
+
+pageDiv.onwheel = (event) => {
+  if (scrollable > 0) {
+    return;
+  }
+
+  scrolling -= event.deltaY;
+  
+  const currentI = pages.indexOf(currentPage);
+
+  if (scrolling < -300 && currentI < pages.length - 1) {
+      switchPage(pages[currentI + 1]);
+      scrolling = 1000;
+      scrollable = 0.5;
+  }
+  else if (scrolling > 300 && currentI > 0) {
+      switchPage(pages[currentI - 1]);
+      scrolling = -1000;
+      scrollable = 0.5;
+  }
+}

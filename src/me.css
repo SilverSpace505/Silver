@@ -79,13 +79,13 @@
   overflow-y: auto;
   -webkit-mask-image: linear-gradient(to bottom,
       transparent 0%,
-      black 10%,
-      black 90%,
+      black 50rem,
+      black calc(90% - 50rem),
       transparent 100%);
   mask-image: linear-gradient(to bottom,
       transparent 0%,
-      black 10%,
-      black 90%,
+      black 50rem,
+      black calc(90% - 50rem),
       transparent 100%);
 }
 

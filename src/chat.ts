@@ -11,6 +11,10 @@ const chatContainer = document.getElementById(
   'chat-container',
 ) as HTMLDivElement;
 
+chatContainer.addEventListener('wheel', (e) => {
+  e.stopPropagation();
+}, { passive: false })
+
 const username = document.getElementById('username') as HTMLInputElement;
 const message = document.getElementById('message') as HTMLInputElement;
 const colour = document.getElementById('colour') as HTMLInputElement;

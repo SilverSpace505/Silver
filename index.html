@@ -47,146 +47,152 @@
     <button id="extraBtn">Extra</button>
   </div>
 
-  <div id="silver" class="content out">
-    <div id="images">
-      <div class="side-img" id="img1"></div>
-      <div class="side-img" id="img2"></div>
-      <div class="side-img" id="img3"></div>
-      <div class="side-img" id="img4"></div>
-      <iframe id="main-img" src="https://pf.silverspace.io" frameborder="0"></iframe>
+  <div id="page">
+    <div id="silver" class="content out">
+      <div id="images">
+        <div class="side-img" id="img1"></div>
+        <div class="side-img" id="img2"></div>
+        <div class="side-img" id="img3"></div>
+        <div class="side-img" id="img4"></div>
+        <iframe id="main-img" src="https://pf.silverspace.io" frameborder="0"></iframe>
+      </div>
+      <p>Welcome to my website! This is where all my games are with some information about me. It's also a place to
+        hangout and chat.</p>
     </div>
-    <p>Welcome to my website! This is where all my games are with some information about me. It's also a place to
-      hangout and chat.</p>
-  </div>
 
-  <div id="projects" class="content out">
-    <div id="projects-top">
-      <input type="text" id="search" placeholder="Search">
-      <h2>Projects</h2>
-      <div class="right">
-        <select name="filter" id="filter">
-          <option value="all">All</option>
-          <option value="3d">3D</option>
-          <option value="2d">2D</option>
-          <option value="js">JS</option>
-          <option value="godot">Godot</option>
-        </select>
-        <select name="sort" id="sort">
-          <option value="cool">Cool</option>
-          <option value="new">New</option>
-          <option value="old">Old</option>
-          <option value="views">Views</option>
-        </select>
+    <div id="projects" class="content out">
+      <div id="projects-top">
+        <input type="text" id="search" placeholder="Search">
+        <h2>Projects</h2>
+        <div class="right">
+          <select name="filter" id="filter">
+            <option value="all">All</option>
+            <option value="3d">3D</option>
+            <option value="2d">2D</option>
+            <option value="js">JS</option>
+            <option value="godot">Godot</option>
+          </select>
+          <select name="sort" id="sort">
+            <option value="cool">Cool</option>
+            <option value="new">New</option>
+            <option value="old">Old</option>
+            <option value="views">Views</option>
+          </select>
+        </div>
+      </div>
+      <div id="projects-container"></div>
+    </div>
+
+    <div id="me" class="content out">
+      <h2>Me</h2>
+      <div id="about-me">
+        <h3>General</h3>
+        <p>I'm a developer that experiments with simulations, graphics, networking, and games.</p>
+        <p>I've coded this website to share my projects and hopefully spread some fun. I enjoy creating new things, and
+          most of all testing my boundaries of what I can code.</p>
+        <p>I'm currently experimenting with rust, developing a new version of speedwing and learning database management
+          stuff.</p>
+        <h3>Backstory</h3>
+        <p>
+          In around 2020-2021 i created various scratch projects where i learned the fundamentals of coding and
+          experimented with ideas.
+          After that, i tried various game engines and languages, i made a few projects in python, and learnt a bit of
+          unity and unreal.
+        </p>
+        <p>
+          In 2022 I learnt Godot and made a load of little video games, some were made to learn Godot, while others were
+          made to compete in Game Jams.
+        </p>
+        <p>
+          In 2023 I switched to JavaScript and the web to make cool web games and basic simulations, like the farlands
+          and speedwing origins.
+        </p>
+        <p>
+          In 2024, I experimented with different ways of making AI and particles systems, while beginning to learn
+          webgpu.
+          at the end of the year the event happened (deleted my whole codebase),
+          since then i've developed daily backups of the codebase and other safety measures.
+        </p>
+        <p>
+          In 2025, i developed and experimented with my own AI systems, later learning typescript and webgpu to take
+          my particle simulations further
+        </p>
+        <p>
+          Recently, I've been having fun learning rust, it seems to have potential for future projects too.
+        </p>
+        <h4>* I'm not sure what to think of you if you actually read all that. Reach out to me on discord (my username
+          is
+          <span>silverspace.io</span>) if you're interested.
+        </h4>
+        <div style="height: 30rem"></div>
+      </div>
+      <div id="pf">
+        <iframe src="https://pf.silverspace.io" id="pf-img"></iframe>
+      </div>
+      <div id="links">
+        <a href="https://github.com/SilverSpace505" target="_blank"><img src="/github.png" alt="Github"></a>
+        <a href="https://silverspace.itch.io/" target="_blank"><img src="/itch-io.png" alt="Itch.io"></a>
+        <a href="https://www.reddit.com/user/SilverSpace707/" target="_blank"><img src="/reddit.png" alt="Reddit"></a>
+        <a href="https://scratch.mit.edu/users/SilverSpace707/" target="_blank"><img src="/scratch.png"
+            alt="Scratch"></a>
       </div>
     </div>
-    <div id="projects-container"></div>
-  </div>
+    <div id="devlogs" class="content out">
+      <h2>Devlogs</h2>
+      <div id="devlogs-path"></div>
+      <div id="devlogs-container">
+        <div class="devlog">
+          <span class="devlog-title">Cool devlog</span>
+          <span class="devlog-date">YYYY/MM/DD</span>
+          <p class="devlog-description">I coded something</p>
+        </div>
 
-  <div id="me" class="content out">
-    <h2>Me</h2>
-    <div id="about-me">
-      <h3>General</h3>
-      <p>I'm a developer that experiments with simulations, graphics, networking, and games.</p>
-      <p>I've coded this website to share my projects and hopefully spread some fun. I enjoy creating new things, and
-        most of all testing my boundaries of what I can code.</p>
-      <p>I'm currently experimenting with rust, developing a new version of speedwing and learning database management
-        stuff.</p>
-      <h3>Backstory</h3>
-      <p>
-        In around 2020-2021 i created various scratch projects where i learned the fundamentals of coding and
-        experimented with ideas.
-        After that, i tried various game engines and languages, i made a few projects in python, and learnt a bit of
-        unity and unreal.
-      </p>
-      <p>
-        In 2022 I learnt Godot and made a load of little video games, some were made to learn Godot, while others were
-        made to compete in Game Jams.
-      </p>
-      <p>
-        In 2023 I switched to JavaScript and the web to make cool web games and basic simulations, like the farlands
-        and speedwing origins.
-      </p>
-      <p>
-        In 2024, I experimented with different ways of making AI and particles systems, while beginning to learn webgpu.
-        at the end of the year the event happened (deleted my whole codebase),
-        since then i've developed daily backups of the codebase and other safety measures.
-      </p>
-      <p>
-        In 2025, i developed and experimented with my own AI systems, later learning typescript and webgpu to take
-        my particle simulations further
-      </p>
-      <p>
-        Recently, I've been having fun learning rust, it seems to have potential for future projects too.
-      </p>
-      <h4>* I'm not sure what to think of you if you actually read all that. Reach out to me on discord (my username is
-        <span>silverspace.io</span>) if you're interested.
-      </h4>
-      <div style="height: 30rem"></div>
-    </div>
-    <div id="pf">
-      <iframe src="https://pf.silverspace.io" id="pf-img"></iframe>
-    </div>
-    <div id="links">
-      <a href="https://github.com/SilverSpace505" target="_blank"><img src="/github.png" alt="Github"></a>
-      <a href="https://silverspace.itch.io/" target="_blank"><img src="/itch-io.png" alt="Itch.io"></a>
-      <a href="https://www.reddit.com/user/SilverSpace707/" target="_blank"><img src="/reddit.png" alt="Reddit"></a>
-      <a href="https://scratch.mit.edu/users/SilverSpace707/" target="_blank"><img src="/scratch.png" alt="Scratch"></a>
-    </div>
-  </div>
-  <div id="devlogs" class="content out">
-    <h2>Devlogs</h2>
-    <div id="devlogs-path"></div>
-    <div id="devlogs-container">
-      <div class="devlog">
-        <span class="devlog-title">Cool devlog</span>
-        <span class="devlog-date">YYYY/MM/DD</span>
-        <p class="devlog-description">I coded something</p>
-      </div>
-
-      <div class="devlog">
-        <span class="devlog-title">Devlog 2</span>
-        <span class="devlog-date">Ima code this later</span>
-        <p class="devlog-description">I also coded this</p>
+        <div class="devlog">
+          <span class="devlog-title">Devlog 2</span>
+          <span class="devlog-date">Ima code this later</span>
+          <p class="devlog-description">I also coded this</p>
+        </div>
       </div>
     </div>
-  </div>
-  <div id="chat" class="content out">
-    <h2>Chat</h2>
-    <div id="chat-container"></div>
-    <input type="color" name="colour" id="colour" value="#ffffff">
-    <input type="text" id="username" placeholder="Username" maxlength="15">
-    <input type="text" id="message" placeholder="Message" maxlength="200">
-  </div>
-  <div id="extra" class="content out">
-    <div id="extra-content" class="extra-content">
-      <h3>Extra</h3>
-      <p>The code for this website is on <a href="https://github.com/SilverSpace505/Silver" target="_blank">Github</a>
-      </p>
-      <p>Add my weblink to your website!</p>
-      <a href="https://silverspace.io">
-        <img src="https://silverspace.io/silverspace.gif">
-      </a>
-      <div id="linkcode">&lt;a href="https://silverspace.io"&gt;
+    <div id="chat" class="content out">
+      <h2>Chat</h2>
+      <div id="chat-container"></div>
+      <input type="color" name="colour" id="colour" value="#ffffff">
+      <input type="text" id="username" placeholder="Username" maxlength="15">
+      <input type="text" id="message" placeholder="Message" maxlength="200">
+    </div>
+    <div id="extra" class="content out">
+      <div id="extra-content" class="extra-content">
+        <h3>Extra</h3>
+        <p>The code for this website is on <a href="https://github.com/SilverSpace505/Silver" target="_blank">Github</a>
+        </p>
+        <p>Add my weblink to your website!</p>
+        <a href="https://silverspace.io">
+          <img src="https://silverspace.io/silverspace.gif">
+        </a>
+        <div id="linkcode">&lt;a href="https://silverspace.io"&gt;
 &lt;img src="https://silverspace.io/silverspace.gif"&gt;
 &lt;/a&gt;</div>
-    </div>
-    <div id="seperator"></div>
-    <div id="friends" class="extra-content">
-      <h3>Friends</h3>
-      <div id="friend-links">
-        <a href="https://overscore34.github.io" class="banner">
-          <img src="https://overscore34.github.io/images/overscoreBanner.png">
-        </a>
-        <a href="https://bemannu.github.io" class="banner">
-          <img src="https://bemannu.github.io/image.png">
-        </a>
-        <a href="https://blazingfish.github.io" class="banner">
-          <img src="https://blazingfish.github.io/images/icon.jpg">
-        </a>
-        <a href="https://mebaddev.net/"><img src="/friends/mebaddev.png"></a>
-        <a href="https://redguyonetwo.github.io/speedwing/">Redguy - Speedwing</a>
+      </div>
+      <div id="seperator"></div>
+      <div id="friends" class="extra-content">
+        <h3>Friends</h3>
+        <div id="friend-links">
+          <a href="https://overscore34.github.io" class="banner">
+            <img src="https://overscore34.github.io/images/overscoreBanner.png">
+          </a>
+          <a href="https://bemannu.github.io" class="banner">
+            <img src="https://bemannu.github.io/image.png">
+          </a>
+          <a href="https://blazingfish.github.io" class="banner">
+            <img src="https://blazingfish.github.io/images/icon.jpg">
+          </a>
+          <a href="https://mebaddev.net/"><img src="/friends/mebaddev.png"></a>
+          <a href="https://redguyonetwo.github.io/speedwing/">Redguy - Speedwing</a>
+        </div>
       </div>
     </div>
+
 
     <script type="module" src="/src/main.ts"></script>
 </body>
