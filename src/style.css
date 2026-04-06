@@ -61,11 +61,11 @@ canvas {
   border: none;
   padding-left: 130rem;
   color: white;
-  transition: width 0.2s ease-out, padding-left 0.2s ease-out, all 0.2s ease-out;
+  transition: width 0.2s ease-out, padding-left 0.2s ease-out, opacity 0.2s ease-out, all 0.2s ease-out;
   background-color: var(--btnColour);
   filter: drop-shadow(0 10rem 5rem var(--btnColour));
-  animation: shift var(--buttons) ease-in-out infinite alternate;
-  translate: -100rem 0;
+  translate: -500rem 0;
+  animation: btnin 1s ease calc(var(--shift-delay) / 5) forwards, shift var(--buttons) ease-in-out calc(1s + var(--shift-delay)) infinite alternate;
 }
 
 button svg {
@@ -77,9 +77,30 @@ button svg {
   fill: var(--btnColour);
 }
 
+@keyframes btnin {
+  from {
+    translate: -500rem 0;
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 0;
+  }
+
+  to {
+    translate: -100rem 0;
+    opacity: 1;
+  }
+}
+
 @keyframes shift {
-  from { translate: -100rem 0; }
-  to { translate: -90rem 0; }
+  from {
+    translate: -100rem 0;
+  }
+
+  to {
+    translate: -90rem 0;
+  }
 }
 
 #pages button:hover {
@@ -90,11 +111,7 @@ button svg {
 #pages button:disabled {
   width: 337.5rem;
   padding-left: 120rem;
-  opacity: 0.5;
-}
-
-#pages button:disabled {
-  translate: -100rem 0;
+  opacity: 0.5 !important;
 }
 
 .sideClick {
@@ -150,32 +167,32 @@ button svg {
 
 #pages #silverBtn {
   --btnColour: rgba(0, 127, 255, var(--btnAlpha));
-  animation-delay: 0;
+  --shift-delay: 0s;
 }
 
 #pages #projectsBtn {
   --btnColour: rgba(255, 0, 0, var(--btnAlpha));
-  animation-delay: calc(var(--buttons) / 5 * 1);
+  --shift-delay: calc(var(--buttons) / 5 * 1);
 }
 
 #pages #meBtn {
   --btnColour: rgba(255, 127, 0, var(--btnAlpha));
-  animation-delay: calc(var(--buttons) / 5 * 2);
+  --shift-delay: calc(var(--buttons) / 5 * 2);
 }
 
 #pages #devlogsBtn {
   --btnColour: rgba(255, 255, 0, var(--btnAlpha));
-  animation-delay: calc(var(--buttons) / 5 * 3);
+  --shift-delay: calc(var(--buttons) / 5 * 3);
 }
 
 #pages #chatBtn {
   --btnColour: rgba(0, 255, 0, var(--btnAlpha));
-  animation-delay: calc(var(--buttons) / 5 * 4);
+  --shift-delay: calc(var(--buttons) / 5 * 4);
 }
 
 #pages #extraBtn {
   --btnColour: rgba(127, 127, 127, var(--btnAlpha));
-  animation-delay: calc(var(--buttons) / 5 * 5);
+  --shift-delay: calc(var(--buttons) / 5 * 5);
 }
 
 #page {
@@ -287,28 +304,66 @@ iframe {
   margin: 0;
   padding: 0;
   font-size: 100rem;
-  animation: bob var(--title) ease-in-out infinite alternate;
+  translate: 0 -200rem;
+  animation: span-in 1s ease calc(var(--num) * 1s / 20) forwards, bob var(--title) ease-in-out calc(1s + var(--title) / 5 * var(--num)) infinite alternate;
 }
 
 @keyframes bob {
-  from { transform: translateY(0); }
-  to { transform: translateY(-5rem); }
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-5rem);
+  }
+}
+
+@keyframes span-in {
+  from {
+    offset-distance: 0%;
+  }
+
+  to {
+    offset-distance: 100%;
+  }
+
+  from {
+    translate: calc(-100rem + 200rem / 5 * var(--num)) calc(-200rem + 400rem / 5 * var(--num));
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+
+#title span:nth-child(1) {
+  --num: 0;
 }
 
 #title span:nth-child(2) {
-  animation-delay: calc(var(--title) / 5 * 1);
+  --num: 1;
 }
+
 #title span:nth-child(3) {
-  animation-delay: calc(var(--title) / 5 * 2);
+  --num: 2;
 }
+
 #title span:nth-child(4) {
-  animation-delay: calc(var(--title) / 5 * 3);
+  --num: 3;
 }
+
 #title span:nth-child(5) {
-  animation-delay: calc(var(--title) / 5 * 4);
+  --num: 4;
 }
+
 #title span:nth-child(6) {
-  animation-delay: calc(var(--title) / 5 * 5);
+  --num: 5;
 }
 
 h2 {
@@ -328,7 +383,25 @@ h2.hide {
 }
 
 #title svg {
-  animation: title-anim 10s ease-in-out infinite;
+  animation: title-in 1s ease forwards, title-anim 10s ease-in-out 1s infinite;
+}
+
+@keyframes title-in {
+  from {
+    scale: 0;
+    rotate: 45deg;
+    opacity: 0
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  to {
+    scale: 1;
+    rotate: 0deg;
+    opacity: 1;
+  }
 }
 
 @keyframes title-anim {
@@ -337,14 +410,17 @@ h2.hide {
     scale: 1;
     filter: drop-shadow(0 0 2rem black);
   }
+
   33% {
     scale: 1.1;
   }
+
   50% {
     rotate: 5deg;
     scale: 1.05;
     filter: drop-shadow(0 0 1rem black);
   }
+
   to {
     rotate: 0deg;
     scale: 1;
