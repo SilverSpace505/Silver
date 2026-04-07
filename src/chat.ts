@@ -180,7 +180,7 @@ message.addEventListener('keydown', (event) => {
   }
 });
 
-socket.on('connect', () => {
+export function chat_init() {
   page = 0;
   allChat = [];
   lastUser = '';
@@ -195,7 +195,7 @@ socket.on('connect', () => {
     );
     chatContainer.scrollTop = chatContainer.scrollHeight;
   });
-});
+}
 
 socket.on('chat', (msg: ServerMessage) => {
   loadMessage({ ...msg, time: new Date(msg.time) });

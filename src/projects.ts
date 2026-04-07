@@ -122,7 +122,7 @@ function manageProjects() {
   }
 }
 
-socket.on('connect', () => {
+export function projects_init() {
   socket.emit('fetch_projects', (projects: [string, ProjectData][]) => {
     const projectsO: Record<string, ProjectData> = {};
     for (const project of projects) {
@@ -207,7 +207,7 @@ socket.on('connect', () => {
     }
     socket.emit('get_clicks');
   });
-});
+}
 
 socket.on('get_clicks', (clicks: Record<string, ClicksData>) => {
   clickData = clicks;

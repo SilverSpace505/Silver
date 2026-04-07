@@ -89,7 +89,7 @@
     <div id="projects" class="content out">
       <div id="projects-top">
         <input type="text" id="search" placeholder="Search">
-        <h2>Projects</h2>
+        <h2 class="content-title">Projects</h2>
         <div class="right">
           <select name="filter" id="filter">
             <option value="all">All</option>
@@ -110,7 +110,7 @@
     </div>
 
     <div id="me" class="content out">
-      <h2>Me</h2>
+      <h2 class="content-title">Me</h2>
       <div id="about-me">
         <h3>General</h3>
         <p>I'm a developer that experiments with simulations, graphics, networking, and games.</p>
@@ -164,24 +164,15 @@
       </div>
     </div>
     <div id="devlogs" class="content out">
-      <h2>Devlogs</h2>
+      <h2 class="content-title">Devlogs</h2>
       <div id="devlogs-path"></div>
       <div id="devlogs-container">
-        <div class="devlog">
-          <span class="devlog-title">Cool devlog</span>
-          <span class="devlog-date">YYYY/MM/DD</span>
-          <p class="devlog-description">I coded something</p>
-        </div>
-
-        <div class="devlog">
-          <span class="devlog-title">Devlog 2</span>
-          <span class="devlog-date">Ima code this later</span>
-          <p class="devlog-description">I also coded this</p>
-        </div>
       </div>
+      <div id="current-devlog" class="devlog-content"></div>
+      <div id="last-devlog" class="devlog-content"></div>
     </div>
     <div id="chat" class="content out">
-      <h2>Chat</h2>
+      <h2 class="content-title">Chat</h2>
       <div id="chat-container"></div>
       <input type="color" name="colour" id="colour" value="#ffffff">
       <input type="text" id="username" placeholder="Username" maxlength="15">

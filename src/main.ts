@@ -1,16 +1,33 @@
 import { socket } from './network';
 import './projects';
-import { anticlick } from './projects';
+import { anticlick, projects_init } from './projects';
 
 import './devlogs';
 import './chat';
 import './me';
 import { extratick } from './extra';
 import utils from './utils';
+import { devlogs_init, openDevlog } from './devlogs';
+import { chat_init } from './chat';
 
 const targetSize = { x: 1600, y: 1000 };
 
 const pages = ['silver', 'projects', 'me', 'devlogs', 'chat', 'extra'];
+
+const inits: Record<string, { fn: () => void, connect: boolean }> = {
+  'devlogs': {
+    fn: devlogs_init,
+    connect: true
+  },
+  'projects': {
+    fn: projects_init,
+    connect: true
+  },
+  'chat': {
+    fn: chat_init,
+    connect: true
+  }
+}
 
 const pageDivs: Record<string, HTMLDivElement> = {};
 
@@ -45,8 +62,12 @@ for (const page of pages) {
 }
 
 function switchPage(target: string) {
-  history.pushState(null, '', target == 'silver' ? '/' : `/${target}`);
-
+  if (target == 'devlogs' && openDevlog.v) {
+    history.pushState(null, '', `/${target}/${openDevlog.v}`);
+  } else {
+    history.pushState(null, '', target == 'silver' ? '/' : `/${target}`);
+  }
+  
   if (currentPage) {
     buttons[currentPage].disabled = false;
     pageDivs[currentPage].classList.add('out');
@@ -64,6 +85,11 @@ function switchPage(target: string) {
   buttons[currentPage].disabled = true;
   const elements = pageDivs[currentPage].querySelectorAll('*');
   elements.forEach((el) => el.classList.remove('hide'));
+
+  if (currentPage in inits) {
+    const init = inits[currentPage];
+    if (socket.connected || !init.connect) init.fn();
+  }
 }
 
 let scale = 1;
@@ -87,8 +113,15 @@ window.onresize = () => {
 window.dispatchEvent(new Event('resize'));
 
 setTimeout(() => {
-  const path = location.pathname.slice(1);
+  const path = location.pathname.slice(1).split('/')[0];
   if (path && pages.includes(path) && path != 'silver') {
+    if (path == 'devlogs') {
+      let devlog = location.pathname.slice(1).split('/')[1];
+      if (devlog) {
+        openDevlog.v = devlog;
+        openDevlog.initial = true;
+      }
+    }
     switchPage(path);
     buttons['silver'].disabled = false;
     buttons[path].disabled = true;
@@ -118,7 +151,7 @@ function animate() {
   // console.log(scrolling, (1 - Math.abs(scrolling) / 50) ** 5 * 100);
 
   // let scrolled = Math.max(0, Math.abs(scrolling) / 50 - 0.5);
-  
+
   // pageDiv.style.opacity = `${(1 - scrolled) ** 5 * 100}%`;
 
   for (const page in pageDivs) {
@@ -139,17 +172,24 @@ pageDiv.onwheel = (event) => {
   }
 
   scrolling -= event.deltaY;
-  
+
   const currentI = pages.indexOf(currentPage);
 
   if (scrolling < -300 && currentI < pages.length - 1) {
-      switchPage(pages[currentI + 1]);
-      scrolling = 1000;
-      scrollable = 0.5;
+    switchPage(pages[currentI + 1]);
+    scrolling = 1000;
+    scrollable = 0.5;
   }
   else if (scrolling > 300 && currentI > 0) {
-      switchPage(pages[currentI - 1]);
-      scrolling = -1000;
-      scrollable = 0.5;
+    switchPage(pages[currentI - 1]);
+    scrolling = -1000;
+    scrollable = 0.5;
   }
 }
+
+socket.on('connect', () => {
+  if (currentPage in inits) {
+    const init = inits[currentPage];
+    if (init.connect) init.fn();
+  }
+})

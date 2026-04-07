@@ -6,16 +6,14 @@
   position: absolute;
   left: 100rem;
   top: 200rem;
-   background: repeating-radial-gradient(
-      circle at center,
+  background: repeating-radial-gradient(circle at center,
       white 0 4rem,
-      transparent 1rem 16rem
-    );
+      transparent 1rem 16rem);
   background-size: 100% 16rem;
   width: 8rem;
   /* border-left: 10rem dotted white; */
   height: calc(100% - 200rem);
-  mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 50rem, black calc(100% - 50rem), transparent);
 }
 
 #devlogs-container {
@@ -23,10 +21,12 @@
   left: 120rem;
   top: 200rem;
   /* background-color: blue; */
-  padding-top: 100rem;
+  padding-top: 35rem;
+  padding-bottom: 35rem;
   width: calc(100% - 120rem);
-  height: calc(100% - 200rem); 
-  mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  height: calc(100% - 250rem);
+  mask-image: linear-gradient(to bottom, transparent, black 50rem, black calc(100% - 50rem), transparent);
+  overflow-y: auto;
 }
 
 .devlog {
@@ -38,13 +38,29 @@
   background-color: rgba(0, 0, 0, 0.5);
   border: 2.5rem rgba(255, 255, 255, 0.75) solid;
   margin-bottom: 20rem;
+  transition: all 0.2s ease;
+}
+
+.devlog:hover {
+  translate: -5rem 0;
+  scale: 0.95;
+}
+
+.devlog:active {
+  translate: -10rem 0;
+  scale: 0.9;
+}
+
+.devlog.open {
+  background-color: rgba(50, 50, 50, 0.5);
+  box-shadow: 0 0 5rem white, 0 5rem 5rem rgb(0, 150, 255);
 }
 
 .devlog-title {
   position: absolute;
   top: 20rem;
   translate: 0 -50%;
-  font-size: 30rem;
+  font-size: 27rem;
   text-shadow: 0 3rem #555, 0 0 6rem black, 0 3rem 6rem black;
   font-family: font;
 }
@@ -54,10 +70,120 @@
   font-size: 20rem;
   font-family: font;
   position: absolute;
+  color: #aaa;
   text-shadow: 0 2rem #555, 0 0 4rem black, 0 3rem 4rem black;
   top: 35rem;
 }
 
 .devlog-description {
   display: none;
+}
+
+.devlog-content {
+  border-radius: 25rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2.5rem rgba(255, 255, 255, 0.75) solid;
+  position: absolute;
+  left: 400rem;
+  top: 200rem;
+  width: calc(100% - 400rem);
+  height: calc(100% - 200rem);
+  padding-left: 10rem;
+  overflow: auto;
+
+  translate: 0 150rem;
+  opacity: 0;
+}
+
+#last-devlog {
+  pointer-events: none;
+}
+
+.devlog-content strong {
+  text-shadow: 0 0 5rem #ccc, 0 2rem #555, 0 0 4rem black, 0 3rem 4rem black;
+}
+
+.devlog-content a {
+  font-size: 25rem;
+  font-family: font;
+  color: rgb(0, 150, 255);
+  text-shadow: 0 3rem rgb(0, 40, 70), 0 0 10rem black, 0 3rem 10rem black;
+}
+
+.devlog-content h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+pre {
+  font-size: var(--size);
+  font-family: font;
+  text-shadow: 0 calc(var(--size) * 0.08) #555, 0 0 calc(var(--size) * 0.08 * 2) black, 0 calc(var(--size) * 0.08) calc(var(--size) * 0.08 * 2) black;
+  user-select: text;
+}
+
+.devlog-content h1 {
+  --size: 75rem;
+}
+
+.devlog-content h2 {
+  --size: 50rem;
+}
+
+.devlog-content h3 {
+  --size: 35rem;
+}
+
+.devlog-content h4 {
+  --size: 25rem;
+}
+
+.devlog-content h5 {
+  --size: 15rem;
+}
+
+.devlog-content h6 {
+  --size: 10rem;
+}
+
+
+.devlog-content p,
+li,
+pre,
+span {
+  --size: 25rem;
+}
+
+.devlog-content code,
+.devlog-content pre {
+  background-color: rgba(25, 25, 25, 0.8);
+  border-radius: 5rem;
+  font-size: calc(var(--size) * 0.75);
+}
+
+.devlog-content code,
+.devlog-content pre {
+  padding: 0 5rem;
+}
+
+.devlog-content pre code {
+  background: none;
+  padding: 0;
+}
+
+.devlog-content blockquote {
+  border-left: 5rem solid rgb(0, 150, 255);
+  border-radius: 4rem;
+  margin: 0;
+  padding-left: 10rem;
+}
+
+.devlog-content img {
+  max-width: 500rem;
+  max-height: 300rem;
+  width: auto;
+  height: auto;
 }
