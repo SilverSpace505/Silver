@@ -48,6 +48,7 @@ canvas {
   top: 50%;
   left: 0;
   transform: translateY(-50%);
+  /* background-color: red; */
 }
 
 #pages button {
@@ -64,7 +65,7 @@ canvas {
   transition: width 0.2s ease-out, padding-left 0.2s ease-out, opacity 0.2s ease-out, all 0.2s ease-out;
   background-color: var(--btnColour);
   filter: drop-shadow(0 10rem 5rem var(--btnColour));
-  translate: -500rem 0;
+  translate: -500% 0;
   animation: btnin 1s ease calc(var(--shift-delay) / 5) forwards, shift var(--buttons) ease-in-out calc(1s + var(--shift-delay)) infinite alternate;
 }
 
@@ -79,7 +80,8 @@ button svg {
 
 @keyframes btnin {
   from {
-    translate: -500rem 0;
+    /* translate: -500rem 0; */
+    translate: -500% 0 ;
     opacity: 0;
   }
 
@@ -88,18 +90,21 @@ button svg {
   }
 
   to {
-    translate: -100rem 0;
+    /* left: 0; */
+    translate: -20% 0;
     opacity: 1;
   }
 }
 
 @keyframes shift {
   from {
-    translate: -100rem 0;
+    translate: -20%;
+    rotate: -0.5deg
   }
 
   to {
-    translate: -90rem 0;
+    translate: -17.5%;
+    rotate: 0.5deg;
   }
 }
 
@@ -163,6 +168,29 @@ button svg {
     right: 0;
     opacity: 0.5;
   }
+}
+
+#pages .page-btn-new {
+  position: absolute;
+  rotate: -15deg;
+  /* left: calc(100% - 30rem); */
+  left: 105rem;
+  top: -10rem;
+  font-size: 30rem;
+  color: rgb(0, 180, 255);
+  text-shadow: 0 3rem rgb(0, 100, 125), 0 0 10rem rgb(0, 76, 255), 0 5rem 10rem rgb(0, 76, 255);
+  animation: btnNew 2s ease-in-out infinite alternate;
+  display: none;
+}
+
+#pages .new-page .page-btn-new {
+  display: block;
+}
+
+@keyframes btnNew {
+  from { rotate: -13deg }
+  50% { scale: 1.05 }
+  to { rotate: -17deg }
 }
 
 #pages #silverBtn {

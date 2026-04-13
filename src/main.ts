@@ -8,7 +8,7 @@ import './me';
 import { extratick } from './extra';
 import utils from './utils';
 import { devlogs_init, openDevlog } from './devlogs';
-import { chat_init } from './chat';
+import { chat_init, pageChanged } from './chat';
 
 const targetSize = { x: 1600, y: 1000 };
 
@@ -62,6 +62,8 @@ for (const page of pages) {
 }
 
 function switchPage(target: string) {
+  pageChanged(target);
+
   if (target == 'devlogs' && openDevlog.v) {
     history.pushState(null, '', `/${target}/${openDevlog.v}`);
   } else {

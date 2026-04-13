@@ -15,6 +15,7 @@ const currentDevlog = document.getElementById('current-devlog') as HTMLDivElemen
 const lastDevlog = document.getElementById('last-devlog') as HTMLDivElement;
 
 const devlogElements: Record<string, HTMLDivElement> = {};
+const devlogNewEs: Record<string, HTMLSpanElement> = {};
 
 interface Devlog {
   id: string,
@@ -55,8 +56,12 @@ export function devlogs_init() {
       devlogTitle.classList.add('devlog-title');
       devlogE.appendChild(devlogTitle);
       const devlogDate = document.createElement('span');
-      devlogDate.classList.add('devlog-date')
+      devlogDate.classList.add('devlog-date');
       devlogE.appendChild(devlogDate);
+      const devlogNew = document.createElement('span');
+      devlogNew.textContent = 'NEW';
+      devlogNew.classList.add('devlog-new');
+      devlogE.appendChild(devlogNew);
 
       devlogTitle.textContent = devlog.name;
       devlog.date = new Date(devlog.date);
@@ -65,6 +70,10 @@ export function devlogs_init() {
       let devlogI = i;
 
       devlogE.onclick = () => {
+        if (!lastViewed.includes(devlog.id)) {
+          lastViewed.push(devlog.id);
+        }
+        updateNewDevlogs(devlogs.map(d => d.id));
         if (openDevlog.v == devlog.id && !openDevlog.initial) return;
         openDevlog.initial = false;
 
@@ -124,8 +133,68 @@ export function devlogs_init() {
       }
 
       devlogElements[devlog.id] = devlogE;
+      devlogNewEs[devlog.id] = devlogNew;
 
       i++
     }
+
+    updateNewDevlogs(devlogs.map(d => d.id));
   })
+}
+
+//
+
+//
+
+//
+
+socket.on('connect', () => {
+  socket.emit('list_devlogs', (devlogs: Devlog[]) => {
+    updateNewDevlogs(devlogs.map(d => d.id));
+  });
+});
+
+const devlogsBtn = document.getElementById('devlogsBtn') as HTMLButtonElement;
+
+let lastViewed: string[] = [];
+let initialiseViewed = false;
+
+let loadedLastViewed = localStorage.getItem("lastViewedDevlogs");
+if (loadedLastViewed) {
+  lastViewed = JSON.parse(loadedLastViewed);
+} else {
+  initialiseViewed = true;
+}
+
+function updateNewDevlogs(devlogs: string[]) {
+  for (const devlog of lastViewed) {
+    if (!devlogs.includes(devlog)) {
+      lastViewed.splice(lastViewed.indexOf(devlog), 1);
+    }
+  }
+
+  const newDevlogs = [];
+  for (const devlog of devlogs) {
+      if (initialiseViewed && !lastViewed.includes(devlog)) {
+        lastViewed.push(devlog);
+      }
+
+      if (!lastViewed.includes(devlog)) {
+        newDevlogs.push(devlog);
+      }
+
+      if (devlog in devlogNewEs) {
+        devlogNewEs[devlog].style.display = lastViewed.includes(devlog) ? 'none' : 'block';
+      }
+  }
+
+  initialiseViewed = false;
+
+  localStorage.setItem("lastViewedDevlogs", JSON.stringify(lastViewed));
+
+  if (newDevlogs.length > 0) {
+    devlogsBtn.classList.add("new-page")
+  } else {
+    devlogsBtn.classList.remove("new-page")
+  }
 }

@@ -11,6 +11,7 @@ interface ProjectData {
   showTitle?: boolean;
   online?: boolean;
   github?: string;
+  updated?: string;
 }
 
 interface ClicksData {
@@ -28,7 +29,7 @@ projectsContainer.addEventListener('wheel', (e) => {
 
 const projectElements: Record<
   string,
-  { text: HTMLSpanElement; icon: HTMLImageElement; div: HTMLAnchorElement }
+  { text: HTMLSpanElement; icon: HTMLImageElement; div: HTMLAnchorElement, newE: HTMLSpanElement }
 > = {};
 
 let projectList: string[] = [];
@@ -37,7 +38,7 @@ const search = document.getElementById('search') as HTMLInputElement;
 const filter = document.getElementById('filter') as HTMLSelectElement;
 const sort = document.getElementById('sort') as HTMLSelectElement;
 
-let ProjectData: Record<string, ProjectData> = {};
+let projectData: Record<string, ProjectData> = {};
 let clickData: Record<string, ClicksData> = {};
 
 const mouse = { x: 0, y: 0 };
@@ -101,22 +102,22 @@ function manageProjects() {
   if (sort.value == 'new') {
     projectList.sort(
       (a, b) =>
-        new Date(ProjectData[b].date).getTime() -
-        new Date(ProjectData[a].date).getTime(),
+        new Date(projectData[b].date).getTime() -
+        new Date(projectData[a].date).getTime(),
     );
   }
   if (sort.value == 'old') {
     projectList.sort(
       (a, b) =>
-        new Date(ProjectData[a].date).getTime() -
-        new Date(ProjectData[b].date).getTime(),
+        new Date(projectData[a].date).getTime() -
+        new Date(projectData[b].date).getTime(),
     );
   }
 
   for (const project of projectList) {
-    if (!ProjectData[project].name.toLowerCase().includes(search.value.toLowerCase()))
+    if (!projectData[project].name.toLowerCase().includes(search.value.toLowerCase()))
       continue;
-    if (!ProjectData[project].tags.includes(filter.value) && filter.value != 'all')
+    if (!projectData[project].tags.includes(filter.value) && filter.value != 'all')
       continue;
     projectsContainer.appendChild(projectElements[project].div);
   }
@@ -128,7 +129,7 @@ export function projects_init() {
     for (const project of projects) {
       projectsO[project[0]] = project[1]
     }
-    ProjectData = projectsO;
+    projectData = projectsO;
     for (const project in projectsO) {
       const link = document.createElement('a');
       link.href = projectsO[project].link;
@@ -153,6 +154,9 @@ export function projects_init() {
             socket.emit('click', project);
           }
         }
+
+        lastViewed[project] = new Date();
+        updateNewProjects();
       });
 
       const element = document.createElement('div');
@@ -166,6 +170,12 @@ export function projects_init() {
       clicks.classList.add('project-clicks');
       clicks.textContent = '';
       element.appendChild(clicks);
+
+      const newE = document.createElement('span');
+      newE.classList.add('project-new');
+      newE.textContent = 'NEW';
+      newE.style.display = 'none';
+      element.appendChild(newE);
 
       const date = document.createElement('span');
       date.classList.add('project-date');
@@ -199,13 +209,15 @@ export function projects_init() {
 
       element.style.backgroundImage = `url(${projectsO[project].img})`;
 
-      projectElements[project] = { div: link, text: clicks, icon: clicksIcon };
+      projectElements[project] = { div: link, text: clicks, icon: clicksIcon, newE };
       projectList.push(project);
 
       link.appendChild(element);
       projectsContainer.appendChild(link);
     }
     socket.emit('get_clicks');
+
+    updateNewProjects();
   });
 }
 
@@ -221,3 +233,75 @@ socket.on('get_clicks', (clicks: Record<string, ClicksData>) => {
   }
   manageProjects();
 });
+
+//
+
+//
+
+//
+
+socket.on('connect', () => {
+  socket.emit('fetch_projects', (projects: [string, ProjectData][]) => {
+    const projectsO: Record<string, ProjectData> = {};
+    for (const project of projects) {
+      projectsO[project[0]] = project[1]
+    }
+    projectData = projectsO;
+
+    updateNewProjects();
+  });
+});
+
+const projectsBtn = document.getElementById('projectsBtn') as HTMLButtonElement;
+
+let lastViewed: Record<string, Date> = {};
+let initialiseViewed = false;
+
+let loadedLastViewed = localStorage.getItem("lastViewedProjects");
+if (loadedLastViewed) {
+  lastViewed = JSON.parse(loadedLastViewed);
+  for (const project in lastViewed) {
+    lastViewed[project] = new Date(lastViewed[project]);
+  }
+} else {
+  initialiseViewed = true;
+}
+
+function updateNewProjects() {
+  for (const project in lastViewed) {
+    if (!(project in projectData)) {
+      delete lastViewed[project];
+    }
+  }
+
+  const newProjects = [];
+  for (const project in projectData) {
+    let data = projectData[project];
+
+    if (initialiseViewed) {
+      lastViewed[project] = new Date();
+    }
+
+    let last = lastViewed[project] ? lastViewed[project].getTime() : 0;
+
+    let lastUpdate = (data.updated ? new Date(data.updated) : new Date(data.date)).getTime();
+
+    if (lastUpdate > last) {
+      newProjects.push(project);
+    }
+
+    if (project in projectElements) {
+      projectElements[project].newE.style.display = lastUpdate > last ? 'block' : 'none'
+    }
+  }
+
+  initialiseViewed = false;
+
+  localStorage.setItem("lastViewedProjects", JSON.stringify(lastViewed));
+
+  if (newProjects.length > 0) {
+    projectsBtn.classList.add("new-page")
+  } else {
+    projectsBtn.classList.remove("new-page")
+  }
+}

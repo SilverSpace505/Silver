@@ -156,6 +156,23 @@ input.hide {
   text-shadow: 0 2rem #555, 0 0 6rem black, 0 0 6rem black;
 }
 
+.project-new {
+  position: absolute;
+  font-size: 30rem;
+  color: rgb(0, 180, 255);
+  left: 50%;
+  translate: -50% 0;
+  top: 10rem;
+  text-shadow: 0 2rem rgb(0, 100, 125), 0 0 6rem rgb(0, 76, 255), 0 0 6rem rgb(0, 76, 255);
+  animation: new-project 2s ease-in-out infinite alternate;
+}
+
+@keyframes new-project {
+  from { rotate: -5deg }
+  50% { scale: 1.05 }
+  to { rotate: 5deg }
+}
+
 .project-date {
   position: absolute;
   font-size: 15rem;

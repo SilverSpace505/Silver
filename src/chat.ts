@@ -16,7 +16,7 @@ chatContainer.addEventListener('wheel', (e) => {
 }, { passive: false })
 
 chatContainer.onscroll = () => {
-  if (chatContainer.scrollTop < 500 && !fetching) {
+  if ((chatContainer.scrollTop < 500 || chatContainer.scrollHeight <= chatContainer.clientHeight) && !fetching) {
     page++
     fetching = true;
     const beforeHeight = chatContainer.scrollHeight;
@@ -29,6 +29,8 @@ chatContainer.onscroll = () => {
       );
       fetching = false;
       chatContainer.scrollTop = beforeTop + (chatContainer.scrollHeight - beforeHeight);
+
+      if (chatContainer.onscroll) chatContainer.onscroll(new Event(""));
     });
   }
 }
@@ -92,6 +94,9 @@ function halfColour(hex: string) {
 }
 
 function loadMessage(msg: Message) {
+  if (currentPage == "chat") lastViewed = new Date().getTime();
+  updateNewChat(msg.time.getTime());
+
   if (
     msg.user + msg.colour == lastUser &&
     lastMsg &&
@@ -194,9 +199,58 @@ export function chat_init() {
       }),
     );
     chatContainer.scrollTop = chatContainer.scrollHeight;
+    if (chatContainer.onscroll) chatContainer.onscroll(new Event(""));
   });
 }
 
 socket.on('chat', (msg: ServerMessage) => {
-  loadMessage({ ...msg, time: new Date(msg.time) });
+  loadMessage({ ...msg, time: new Date(msg.time + "Z") });
 });
+
+//
+
+//
+
+//
+
+let currentPage = ""
+
+export function pageChanged(target: string) {
+    currentPage = target;
+}
+
+socket.on('connect', () => {
+  socket.emit('get_chat', 0, (msgs: ServerMessage[]) => {
+    const newest = Math.max(...msgs.map(m => new Date(m.time).getTime()));
+    
+    updateNewChat(newest);
+  });
+});
+
+const chatBtn = document.getElementById('chatBtn') as HTMLButtonElement;
+
+let lastViewed: number = 0;
+let initialiseViewed = false;
+
+let loadedLastViewed = localStorage.getItem("lastViewedChat");
+if (loadedLastViewed) {
+  lastViewed = JSON.parse(loadedLastViewed);
+} else {
+  initialiseViewed = true;
+}
+
+function updateNewChat(newest: number) {
+  if (initialiseViewed) {
+    lastViewed = new Date().getTime()
+  }
+
+  if (newest > lastViewed) {
+    chatBtn.classList.add("new-page")
+  } else {
+    chatBtn.classList.remove("new-page")
+  }
+
+  initialiseViewed = false;
+
+  localStorage.setItem("lastViewedChat", JSON.stringify(lastViewed));
+}

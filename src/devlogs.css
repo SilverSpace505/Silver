@@ -65,6 +65,25 @@
   font-family: font;
 }
 
+.devlog-new {
+  position: absolute;
+  top: 20rem;
+  right: 10rem;
+  translate: 0 -50%;
+  font-size: 27rem;
+  color: rgb(0, 180, 255);
+  text-shadow: 0 2rem rgb(0, 100, 125), 0 0 6rem rgb(0, 76, 255), 0 0 6rem rgb(0, 76, 255);
+  font-family: font;
+  rotate: 10deg;
+  animation: new-devlog 2s ease-in-out infinite alternate;
+}
+
+@keyframes new-devlog {
+  from { rotate: 5deg }
+  50% { scale: 1.05 }
+  to { rotate: 15deg }
+}
+
 .devlog-date {
   left: 15rem;
   font-size: 20rem;
@@ -100,14 +119,40 @@
 }
 
 .devlog-content strong {
+  display: inline-block;
   text-shadow: 0 0 5rem #ccc, 0 2rem #555, 0 0 4rem black, 0 3rem 4rem black;
+  animation: strong-bob 2s ease-in-out infinite alternate;
+}
+
+@keyframes strong-bob {
+  from {translate: 0 -1rem; scale: 1; rotate: -1deg }
+  50% { scale: 1.01 }
+  to {translate: 0 1rem; rotate: 1deg }
 }
 
 .devlog-content a {
-  font-size: 25rem;
+  display: inline-block;
   font-family: font;
   color: rgb(0, 150, 255);
   text-shadow: 0 3rem rgb(0, 40, 70), 0 0 10rem black, 0 3rem 10rem black;
+  animation: jump 3s ease infinite;
+}
+
+@keyframes jump {
+  40% {translate: 0 0rem; scale: 1; }
+  50% { scale: 1.01; translate: 0 -1rem; }
+  60% {translate: 0 0; scale: 1; }
+}
+
+.devlog-content em {
+  display: inline-block;
+  animation: shift-2 3s ease-in-out infinite alternate;
+}
+
+@keyframes shift-2 {
+  from {translate: -2rem 0; scale: 1; rotate: -1deg }
+  50% { scale: 0.99 }
+  to {translate: 2rem 0; rotate: 1deg }
 }
 
 .devlog-content h1,
